@@ -109,102 +109,87 @@ function iniciarSesion() {
   
   calculadora();*/
 
-  const menu = [
-    {
-      id: 1,
-      title: "buttermilk pancakes",
-      category: "breakfast",
-      price: 15.99,
-      img: "./images/item-1.jpeg",
-      desc: `I'm baby woke mlkshk wolf bitters live-edge blue bottle, hammock freegan copper mug whatever cold-pressed `,
-    },
-    {
-      id: 2,
-      title: "diner double",
-      category: "lunch",
-      price: 13.99,
-      img: "./images/item-2.jpeg",
-      desc: `vaporware iPhone mumblecore selvage raw denim slow-carb leggings gochujang helvetica man braid jianbing. Marfa thundercats `,
-    },
-    {
-      id: 3,
-      title: "godzilla milkshake",
-      category: "shakes",
-      price: 6.99,
-      img: "./images/item-3.jpeg",
-      desc: `ombucha chillwave fanny pack 3 wolf moon street art photo booth before they sold out organic viral.`,
-    },
-    {
-      id: 4,
-      title: "country delight",
-      category: "breakfast",
-      price: 20.99,
-      img: "./images/item-4.jpeg",
-      desc: `Shabby chic keffiyeh neutra snackwave pork belly shoreditch. Prism austin mlkshk truffaut, `,
-    },
-    {
-      id: 5,
-      title: "egg attack",
-      category: "lunch",
-      price: 22.99,
-      img: "./images/item-5.jpeg",
-      desc: `franzen vegan pabst bicycle rights kickstarter pinterest meditation farm-to-table 90's pop-up `,
-    },
-    {
-      id: 6,
-      title: "oreo dream",
-      category: "shakes",
-      price: 18.99,
-      img: "./images/item-6.jpeg",
-      desc: `Portland chicharrones ethical edison bulb, palo santo craft beer chia heirloom iPhone everyday`,
-    },
-    {
-      id: 7,
-      title: "bacon overflow",
-      category: "breakfast",
-      price: 8.99,
-      img: "./images/item-7.jpeg",
-      desc: `carry jianbing normcore freegan. Viral single-origin coffee live-edge, pork belly cloud bread iceland put a bird `,
-    },
-    {
-      id: 8,
-      title: "american classic",
-      category: "lunch",
-      price: 12.99,
-      img: "./images/item-8.jpeg",
-      desc: `on it tumblr kickstarter thundercats migas everyday carry squid palo santo leggings. Food truck truffaut  `,
-    },
-    {
-      id: 9,
-      title: "quarantine buddy",
-      category: "shakes",
-      price: 16.99,
-      img: "./images/item-9.jpeg",
-      desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
-    },
-  ];
+  let events = [];
+
+  const eventName = document.querySelector("#eventName");
+  const eventDate = document.querySelector("#eventDate");
+  const buttonAdd = document.querySelector("#bAdd");
   
-  const sectionCenter = document.querySelector(".section-center");
+  const json = load();
+  const arr = JSON.parse(json);
+  events = [...arr];
+  renderEvents();
   
-  window.addEventListener("DOMContentLoaded", function () {
-    let displayMenu = menu.map(function (item) {
-      // console.log(item);
-  
-      return `<article class="menu-item">
-            <img src=${item.img} alt=${item.title} class="photo" />
-            <div class="item-info">
-              <header>
-                <h4>${item.title}</h4>
-                <h4 class="price">$${item.price}</h4>
-              </header>
-              <p class="item-text">
-                ${item.desc}
-              </p>
-            </div>
-          </article>`;
-    });
-    displayMenu = displayMenu.join("");
-    console.log(displayMenu);
-  
-    sectionCenter.innerHTML = displayMenu;
+  document.querySelector("form").addEventListener("submit", (e) => {
+    e.preventDefault();
   });
+  
+  buttonAdd.addEventListener("click", (e) => {
+    addEvent();
+  });
+  
+  function addEvent() {
+    if (eventName.value === "" || eventDate.value === "") {
+      return;
+    }
+    if (datediff(eventDate.value) < 0) {
+      return;
+    }
+  
+    const newEvent = {
+      id: (Math.random() * 100).toString(36).slice(2),
+      name: eventName.value,
+      date: eventDate.value,
+    };
+  
+    events.unshift(newEvent);
+  
+    save(JSON.stringify(events));
+  
+    eventName.value = "";
+  
+    renderEvents();
+  }
+  
+  function renderEvents() {
+    const eventsHTML = events.map((event) => {
+      return `
+          <div class="task">
+              <div class="days"><span class="days-number">${datediff(
+                event.date
+              )}</span><span class="days-text">días</span></div>
+              <div class="event-name">${event.name}</div>
+              <div class="event-date">${event.date}</div>
+              <div class="actions"><button data-id="${
+                event.id
+              }" class="bDelete">Eliminar</button></div>
+          </div>`;
+    });
+  
+    document.querySelector("#tasksContainer").innerHTML = eventsHTML.join("");
+  
+    document.querySelectorAll(".bDelete").forEach((button) => {
+      button.addEventListener("click", (e) => {
+        const id = button.getAttribute("data-id");
+        events = events.filter((event) => event.id !== id);
+        save();
+        renderEvents();
+      });
+    });
+  }
+  
+  function datediff(d) {
+    var date1 = new Date(d);
+    var date2 = new Date();
+    var difference = date1.getTime() - date2.getTime();
+    var days = Math.ceil(difference / (1000 * 3600 * 24));
+    return days;
+  }
+  
+  function save(data) {
+    localStorage.setItem("items", data);
+  }
+  
+  function load() {
+    return localStorage.getItem("items");
+  }
