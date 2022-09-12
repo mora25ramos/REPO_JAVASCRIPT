@@ -1,13 +1,24 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: pink;
+    background-image: url(Fondos/fondo-aura.jpg);
+    background-position: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   
   .form {
     background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 20px;
     width: 300px;
-    margin: 0 auto;
+    margin: 50px auto;
+    border-radius: 5px;
+
+    box-shadow: -13px 14px 16px 1px rgba(227,66,211,0.69);
+    -webkit-box-shadow: -13px 14px 16px 1px rgba(227,66,211,0.69);
+    -moz-box-shadow: -13px 14px 16px 1px rgba(227,66,211,0.69);
   }
   button {
     border: none;
@@ -15,6 +26,13 @@ body {
     padding: 5px;
     color: white;
     border-radius: 5px;
+  }
+
+  button:hover {
+    background-color: white; 
+    color: black;
+    border-color: blue;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
   }
   
   .form input {
@@ -24,26 +42,31 @@ body {
     width: 100%;
     box-sizing: border-box;
   }
-  input[type="button"] {
+  input[type="submit"] {
     border: none;
     background-color: #1860a8;
     color: white;
     padding: 10px;
     border-radius: 5px;
+    cursor: pointer;
   }
   
-  #tasksContainer {
-    background-color: white;
+  #eventsContainer {
+    background-color: rgb(245, 245, 245);
     border-radius: 5px;
     padding: 10px;
     width: 500px;
-    margin: 100px auto;
+    margin: 60px auto;
     display: flex;
     flex-direction: column;
     gap: 5px;
+
+    box-shadow: -13px 14px 16px 1px rgba(227,66,211,0.69);
+    -webkit-box-shadow: -13px 14px 16px 1px rgba(227,66,211,0.69);
+    -moz-box-shadow: -13px 14px 16px 1px rgba(227,66,211,0.69);
   }
   
-  .task {
+  .event {
     border: solid 1px #ccc;
     padding: 10px;
     display: flex;
@@ -51,23 +74,23 @@ body {
     justify-content: center;
   }
   
-  .task .days {
+  .event .days {
     text-align: center;
     width: 100px;
   }
-  .task .days .days-number {
-    font-size: 30px;
+  .event .days .days-number {
+    font-size: 40px;
     font-weight: bold;
     display: block;
   }
-  .task .event-name {
+  .event .event-name {
     padding: 10px;
     width: 200px;
   }
-  .task .event-date {
+  .event .event-date {
     padding: 10px;
     width: 100px;
   }
-  .task .actions {
+  .event .actions {
     padding: 10px;
   }
