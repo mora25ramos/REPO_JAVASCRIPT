@@ -51,7 +51,7 @@ function iniciarSesion() {
     return resultado;
   }
   
-  function mostrarResultado(resultado) {
+  function mostrarregloesultado(resultado) {
     alert("El resultado de la operación es: " + resultado);
   }
   
@@ -75,22 +75,22 @@ function iniciarSesion() {
           switch (opcionSeleccionada) {
             case 1:
               let resultadoSuma = suma(numeroUno, numeroDos);
-              mostrarResultado(resultadoSuma);
+              mostrarregloesultado(resultadoSuma);
               break;
   
             case 2:
               let resultadoResta = resta(numeroUno, numeroDos);
-              mostrarResultado(resultadoResta);
+              mostrarregloesultado(resultadoResta);
               break;
   
             case 3:
               let resultadoMultiplicacion = multiplicacion(numeroUno, numeroDos);
-              mostrarResultado(resultadoMultiplicacion);
+              mostrarregloesultado(resultadoMultiplicacion);
               break;
   
             case 4:
               let resultadoDivision = division(numeroUno, numeroDos);
-              mostrarResultado(resultadoDivision);
+              mostrarregloesultado(resultadoDivision);
               break;
   
             default:
@@ -116,8 +116,8 @@ function iniciarSesion() {
   const buttonAdd = document.querySelector("#bAdd");
   
   const json = load();
-  const arr = JSON.parse(json);
-  events = [...arr];
+  const arreglo = JSON.parse(json);
+  events = [...arreglo];
   renderEvents();
   
   document.querySelector("form").addEventListener("submit", (e) => {
@@ -132,7 +132,7 @@ function iniciarSesion() {
     if (eventName.value === "" || eventDate.value === "") {
       return;
     }
-    if (datediff(eventDate.value) < 0) {
+    if (dateDiff(eventDate.value) < 0) {
       return;
     }
   
@@ -155,7 +155,7 @@ function iniciarSesion() {
     const eventsHTML = events.map((event) => {
       return `
           <div class="task">
-              <div class="days"><span class="days-number">${datediff(
+              <div class="days"><span class="days-number">${dateDiff(
                 event.date
               )}</span><span class="days-text">días</span></div>
               <div class="event-name">${event.name}</div>
@@ -178,7 +178,7 @@ function iniciarSesion() {
     });
   }
   
-  function datediff(d) {
+  function dateDiff(d) {
     var date1 = new Date(d);
     var date2 = new Date();
     var difference = date1.getTime() - date2.getTime();
